@@ -7,3 +7,7 @@ node_modules/
 /allure-results/
 /blob-report/
 /playwright/.cache/
+
+
+.env**
+!**/.env-cmdrc.json

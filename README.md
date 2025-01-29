@@ -10,6 +10,22 @@ This project contains automated test cases for the e-commerce website using Play
    git clone https://github.com/ButeoButeo/ecommerce-automation
    cd ecommerce-automation
 
+## Setting up the local environment
+Inside every application folder, there is a `.env.example` file that you can use as a template to create your own `.env` file.
+
+You can use the following command to copy the file and create your own `.env` file:
+
+```shell
+cd ecommerce-automation
+cp .env.example .env
+```
+
+For example, assuming we want to test the ecommerce-automation application, the `.env` file would look like this:
+
+```dotenv
+BASE_URL=https://www.fashionworld.co.uk/ # This will run the tests against the web application
+```
+
 # Dependencies 
 
 # Test execution 

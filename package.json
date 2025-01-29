@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "This project contains automated test cases for the e-commerce website using Playwright with the Page Object Model (POM). The test cases cover specified scenarios.",
   "main": "index.js",
-  "scripts": { "test": "npx playwright test" },
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -11,6 +14,7 @@
     "@playwright/test": "^1.50.0",
     "@types/node": "^22.10.10",
     "allure-commandline": "^2.32.0",
-    "allure-playwright": "^3.0.9"
+    "allure-playwright": "^3.0.9",
+    "dotenv": "^16.4.5"
   }
 }
