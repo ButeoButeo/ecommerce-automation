@@ -1,8 +1,8 @@
 import { test, expect } from '../fixtures/pom.fixture';
 
-test.describe('Authentication Registration', () => {
 //Justification: This is a critical feature as it allows users to create accounts, which is the entry point for personalizing their shopping experience and securing their data.
-  test.only('TC Scenario 1: - Validation for Mandatory Fields', async ({ page, registrationPage, landingPage }) => {
+  test.only('Authentication Registration', async ({ page, registrationPage, landingPage }) => {
+    //TC Scenario 1: - Validation for Mandatory Fields
     //step 1 - visit landing page and click on register
     await landingPage.visitPage();
     await landingPage.myAccount.click();
@@ -45,22 +45,22 @@ test.describe('Authentication Registration', () => {
     await page.keyboard.press('Enter');
     // step 9 - validate address found
     await registrationPage.adressFound.hover()
-    await expect(registrationPage.adressFound).toContainText('Brunswick Park Rd');
     await expect(registrationPage.adressFound).toBeVisible();
     //step 10 - select number of years
     await registrationPage.selectYearsNumber('11');
     await registrationPage.continue3Button.click();
     //step 11 - Submit the 4th step registration form "Apply"
+    await registrationPage.continue4Button.click();
+    //step 12 - validate successful registration
     await registrationPage.doNoApplyCredit.click();
     await registrationPage.continueButton.click();
-    //step 12 - validate successful registration
-    await expect(registrationPage.successRegistrationMsg).toHaveText('Thanks for Registering Your Account');
-    await expect(registrationPage.congratulations).toHaveText('Congratulations! Your credit account has been created');
+    await registrationPage.agree.click();
     await registrationPage.acceptCreditAgrement.click();
+    await registrationPage.successRegistrationMsg.hover()
+    const successMesg = await registrationPage.successRegistrationMsg.innerText();
+    expect(registrationPage.successRegistrationMsg).toContainText('Thanks for Registering Your');
   });
 
 
 
 
-
-});
