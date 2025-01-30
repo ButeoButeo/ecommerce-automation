@@ -37,6 +37,7 @@ export class LandingPage {
   readonly successMsgAddBag : Locator
   readonly closeSuccessMsg : Locator
   readonly myBag : Locator
+  readonly checkOut:Locator
   // promo codes 
   readonly promoCode : Locator
   readonly addCodeButton : Locator
@@ -78,10 +79,11 @@ export class LandingPage {
     this.successMsgAddBag = page.getByRole('heading', { name: 'Great choice, you deserve it !' })
     this.closeSuccessMsg = page.locator('#postAddToBagModal > .modal-html > .modal-header > .block-2 > .modal-close > .gui-btn')
     this.myBag = page.getByRole('button', { name: 'My Bag' })
+    this.checkOut = page.getByRole('link', { name: 'Continue to Checkout' })
     // promo codes 
      this.promoCode = page.locator('#claimcode')
      this.addCodeButton = page.locator('.promo-details-btn')
-     this.promoCodeerror = page.locator('#promotionCodeError')
+     this.promoCodeerror = page.getByText('Sorry, we don’t recognise the')
   }
   async visitPage() {
     await this.page.setExtraHTTPHeaders({
@@ -99,12 +101,12 @@ export class LandingPage {
     await expect(this.page).toHaveURL('https://www.fashionworld.co.uk')
   }
   async visitPageWithoutCookiesBanner() {
-    await this.page.goto('');
+    await this.page.goto('/');
     await expect(this.page).toHaveURL('https://www.fashionworld.co.uk')
   }
-  async checkBagNumberOfItemsAddes(number:number) {
-    const bagItems = await this.page.getByText(`${number} Item(s)`, { exact: true }).textContent()
-    expect(bagItems).toBe(`${number} Item(s)`)
+  async checkBagNumberOfItemsAddes(numberItems:number) {
+    const bagItems = await this.page.getByText(`${numberItems} Item(s)`, { exact: true }).textContent()
+    expect(bagItems).toBe(`${numberItems} Item(s)`)
   }
   async AddPromoCode(code:string) {
     await this.promoCode.fill(`${code}`)// Enter the valid promo code

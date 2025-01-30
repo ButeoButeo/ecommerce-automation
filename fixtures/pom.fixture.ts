@@ -19,7 +19,7 @@ type Options = {
 }
 
 const test = baseTest.extend<Pages, Options>({
-  authUser: 'basic',
+  authUser: 'signup-run-use-same-user',
     landingPage: async ({ page }, use) => {
     await use(new LandingPage(page))
   },

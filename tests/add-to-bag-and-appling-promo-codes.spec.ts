@@ -3,10 +3,9 @@ import { test, expect } from '../fixtures/pom.fixture'
 import { LandingPage } from '../pages/Landing.page' */
 
 test.use({ authUser: 'signup-run-use-same-user' })
-test.describe.configure({ mode: 'serial' });
-test.describe('Adding Products to Bag', () => {
+//test.describe('Adding Products to Bag', () => {
 
-  test.only('Add Single Product to Bag', async ({ page, landingPage }) => {
+  test.skip('Adding Products to Bag - Add Single Product to Bag, Invalid  Promo Code and Log out', async ({ page, landingPage }) => {
     //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.tech.hover(); // Navigate to a category tech
@@ -18,9 +17,8 @@ test.describe('Adding Products to Bag', () => {
     await expect(landingPage.successMsgAddBag).toBeVisible()
     await landingPage.closeSuccessMsg.click()
     await landingPage.myBag.click()
-    await landingPage.checkBagNumberOfItemsAddes(1) // Verify item count in bag 
-  });
-
+    await landingPage.checkBagNumberOfItemsAddes("1") // Verify item count in bag 
+  //});
   //test('Add Multiple Products to Bag', async ({ page }) => {
 /*     const products = [`${baseURL}products/product-1`, `${baseURL}products/product-2`];
     for (const product of products) {
@@ -81,19 +79,19 @@ test.describe('Adding Products to Bag', () => {
   const validPromoCode = 'HURRY'; // Replace with an actual valid promo code
   const expiredPromoCode = 'EXPIRED20'; // Replace with an expired promo code
   const invalidPromoCode = 'INVALIDCODE';
-
-
-
-  test.only('Invalid  Promo Code', async ({ page, landingPage }) => {
+ // test('run second - Invalid  Promo Code', async ({ page, landingPage }) => {
     //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.myBag.click()
+    await landingPage.checkOut.click()
+    await landingPage.promoCode.waitFor()
     await landingPage.AddPromoCode(`${invalidPromoCode}`); // Enter the valid promo code, Apply promo code
     await landingPage.promoCodeerror.waitFor()
     await expect(landingPage.promoCodeerror).toBeVisible()
-    expect(landingPage.promoCodeerror).toBe("Sorry, we don’t recognise the code 'INVALIDCODE'. Please check your code and try again, or try another code.")// Validate invalid code error message
+    const promoerror = await landingPage.promoCodeerror.textContent()
+    await expect(promoerror).toBe("Sorry, we don’t recognise the code 'INVALIDCODE'. Please check your code and try again, or try another code.")// Validate invalid code error message
 
-  });
+ // });
 
   //test('Valid Promo Code', async ({ page }) => {
 /*     await page.fill('input[name="promoCode"]', invalidPromoCode); // Enter an invalid promo code
@@ -128,12 +126,10 @@ test.describe('Adding Products to Bag', () => {
     const discount = await page.locator('.promo-discount').textContent(); // Verify discount removal
     expect(discount).toBe(''); // Ensure no discount is applied after removal */
  // });
-  test.only('Log out', async ({ page , landingPage  }) => {
+ // test('run third - Log out', async ({ page , landingPage  }) => {
     //const landingPage = new  LandingPage(page);
-    await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.myAccount.click();
     await landingPage.logout.click();
     await expect(page).toHaveURL(/signoff=yes/); // Ensure logged out
-  });
-
+ // });
 });

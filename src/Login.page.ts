@@ -104,6 +104,7 @@ export class LogInPage {
     await registrationPage.password.waitFor()
     await registrationPage.password.fill('Aa123456789@2025');
     await registrationPage.signinButton.click();
+    await landingPage.myAccount.waitFor();
     await landingPage.myAccount.click();
     await expect(landingPage.logout).toBeVisible();
   }
