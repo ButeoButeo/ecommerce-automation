@@ -21,6 +21,26 @@ export class LandingPage {
   readonly search: Locator
   //log out button
   readonly logout: Locator
+  // technology filter
+  readonly tech : Locator
+  readonly tabletsiPads : Locator
+  readonly screenSize : Locator
+  readonly tabletTypeIpad : Locator
+  readonly onSale  : Locator
+  readonly colourBlue : Locator
+  readonly review : Locator
+  readonly firstProductFromList : Locator
+  //sorting products
+  readonly sortByLowestPrice : Locator
+  // Item detais
+  readonly addToBag : Locator
+  readonly successMsgAddBag : Locator
+  readonly closeSuccessMsg : Locator
+  readonly myBag : Locator
+  // promo codes 
+  readonly promoCode : Locator
+  readonly addCodeButton : Locator
+  readonly promoCodeerror : Locator
   constructor(page: Page) {
     this.page = page
     this.myAccount = page.locator('.gui-dropdown-toggle');
@@ -42,6 +62,26 @@ export class LandingPage {
     this.search = page.getByRole('textbox', { name: 'Search' })
     //log out button
     this.logout = page.getByRole('link', { name: 'Sign Out' })
+    // technology filter
+    this.tech = page.getByRole('link', { name: 'Technology' })
+    this.tabletsiPads = page.getByRole('link', { name: 'iPads & Tablets' })
+    this.screenSize = page.getByRole('link', { name: 'refine via Screen Size 5 - 10' })
+    this.tabletTypeIpad =  page.getByRole('link', { name: 'refine via Tablet Type iPad' })
+    this.onSale = page.getByRole('link', { name: 'refine via On Sale Yes' })
+    this.colourBlue = page.getByRole('link', { name: 'refine via Colour Blue' })
+    this.review = page.getByRole('link', { name: 'refine via Reviews 5 Star' })
+    this.firstProductFromList = page.locator('.product__title.js-product-title').first()
+    //sorting products
+    this.sortByLowestPrice = page.getByLabel('Sort By:')
+    // Item detais
+    this.addToBag = page.getByTitle('Add to Bag')
+    this.successMsgAddBag = page.getByRole('heading', { name: 'Great choice, you deserve it !' })
+    this.closeSuccessMsg = page.locator('#postAddToBagModal > .modal-html > .modal-header > .block-2 > .modal-close > .gui-btn')
+    this.myBag = page.getByRole('button', { name: 'My Bag' })
+    // promo codes 
+     this.promoCode = page.locator('#claimcode')
+     this.addCodeButton = page.locator('.promo-details-btn')
+     this.promoCodeerror = page.locator('#promotionCodeError')
   }
   async visitPage() {
     await this.page.setExtraHTTPHeaders({
@@ -61,5 +101,13 @@ export class LandingPage {
   async visitPageWithoutCookiesBanner() {
     await this.page.goto('');
     await expect(this.page).toHaveURL('https://www.fashionworld.co.uk')
+  }
+  async checkBagNumberOfItemsAddes(number:number) {
+    const bagItems = await this.page.getByText(`${number} Item(s)`, { exact: true }).textContent()
+    expect(bagItems).toBe(`${number} Item(s)`)
+  }
+  async AddPromoCode(code:string) {
+    await this.promoCode.fill(`${code}`)// Enter the valid promo code
+    await this.addCodeButton.click() // Apply promo code
   }
 }

@@ -1,9 +1,13 @@
 import { test, expect } from '../fixtures/pom.fixture'
+/* import { test, expect } from '@playwright/test'
+import { LandingPage } from '../pages/Landing.page' */
 
 test.use({ authUser: 'signup-run-use-same-user' })
 test.describe('Browsing the Catalog', () => {
+
 //Justification: Smooth catalog browsing is critical for user engagement and product discovery.
-  test.only('Category Navigation', async ({ page, landingPage }) => {
+  test('Category Navigation', async ({ page , landingPage  }) => {
+    //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.womens.hover(); // Navigate to "Women" category 
     await landingPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category 
@@ -11,7 +15,8 @@ test.describe('Browsing the Catalog', () => {
     await expect(landingPage.valentinoBag).toBeVisible(); // Verify product list is displayed
   });
 
-  test.only('Search Functionality', async ({ page, landingPage  }) => {
+  test('Search Functionality', async ({ page , landingPage   }) => {
+    //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.search.fill('dress'); // Fill search bar
     await landingPage.search.press('Enter'); // Submit search
@@ -20,7 +25,8 @@ test.describe('Browsing the Catalog', () => {
     await expect(landingPage.dress).toContainText('Dress'); // Ensure search results is relevant
   });
 
-  test.only('Pagination', async ({ page, landingPage  }) => {
+  test('Pagination', async ({ page , landingPage   }) => {
+    //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.womens.click(); // Navigate to a category
     await expect(page).toHaveURL(/.*womens/); // Ensure URL includes navigate to a category
@@ -35,28 +41,36 @@ test.describe('Browsing the Catalog', () => {
     await expect(landingPage.previous).not.toBeVisible(); // Verify pagination is visible
   });
 
-  test('Filter Products', async ({ page }) => {
-/*     await page.goto(`${baseURL}women`);
-    await page.click('button:has-text("Filter")'); // Open filter options
-    await page.click('label:has-text("Size M")'); // Select "Size M" filter
-    await page.click('label:has-text("Color Red")'); // Select "Color Red" filter
-    await page.click('button:has-text("Apply Filters")'); // Apply filters
-    await expect(page.locator('.product-item')).toHaveCount(5); // Verify filtered product count (adjust as needed)
-    await expect(page.locator('.filter-tag')).toContainText('Size M'); // Ensure filter tags are visible
-    await expect(page.locator('.filter-tag')).toContainText('Color Red'); */
+  test('Filter Products', async ({ page , landingPage   }) => {
+    //const landingPage = new  LandingPage(page);
+    await landingPage.visitPageWithoutCookiesBanner();
+    await landingPage.tech.hover(); // Navigate to a category tech
+    await landingPage.tabletsiPads.click()
+    await expect(page).toHaveURL(/.*tech/); // Ensure URL includes navigate to a category tech
+    await landingPage.screenSize.click()
+    await landingPage.tabletTypeIpad.click()
+    await landingPage.onSale.click()
+    await landingPage.colourBlue.click()
+    await landingPage.review.click()
+    await expect(page).toHaveURL(/.*Colour--Blue/); // Ensure URL includes navigate to a category tech
   });
 
-  test('Sorting Products', async ({ page }) => {
-/*     await page.goto(`${baseURL}women`);
-    await page.selectOption('select.sort-dropdown', 'price-low-to-high'); // Sort by "Price: Low to High"
+  test('Sorting Products', async ({ page, landingPage }) => {
+    //const landingPage = new  LandingPage(page);
+    await landingPage.visitPageWithoutCookiesBanner();
+    await landingPage.womens.hover(); // Navigate to "Women" category 
+    await landingPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category
+    await expect(page).toHaveURL(/.*womens\/\accessories/); // Ensure the URL corresponds to the "
+    await landingPage.sortByLowestPrice.selectOption('Lowest Price'); // Sort by "Price: Low to High"
+    await expect(page).toHaveURL(/.*sort=Lowest/); // Ensure the URL corresponds
     const prices = await page.locator('.product-price').allTextContents();
     const numericPrices = prices.map(price => parseFloat(price.replace('£', '')));
     for (let i = 1; i < numericPrices.length; i++) {
       expect(numericPrices[i]).toBeGreaterThanOrEqual(numericPrices[i - 1]); // Ensure prices are sorted
-    } */
+    }
   });
 
-  test('Product Details', async ({ page }) => {
+ // test('Product Details', async ({ page }) => {
 /*     await page.goto(`${baseURL}women`);
     await page.click('.product-item:first-child'); // Click the first product in the list
     await expect(page).toHaveURL(/.*product/); // Ensure the URL corresponds to a product page
@@ -64,9 +78,9 @@ test.describe('Browsing the Catalog', () => {
     await expect(page.locator('.product-price')).toBeVisible(); // Verify product price is displayed
     await expect(page.locator('.product-description')).toBeVisible(); // Verify product description is displayed
     await expect(page.locator('.product-images')).toBeVisible(); // Verify product images are displayed */
-  });
+  //});
 
-  test('Responsive Design', async ({ page }) => {
+ // test('Responsive Design', async ({ page }) => {
 /*     // Test for desktop view
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto(`${baseURL}women`);
@@ -82,12 +96,7 @@ test.describe('Browsing the Catalog', () => {
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.goto(`${baseURL}women`);
     await expect(page.locator('.product-list')).toBeVisible(); // Verify product list is displayed */
-  });
-  test.skip('Log out', async ({ page, landingPage }) => {
-    await landingPage.visitPageWithoutCookiesBanner();
-    await landingPage.myAccount.click();
-    await landingPage.logout.click();
-    await expect(page).toHaveURL(/signoff=yes/); // Ensure logged out
-  });
+  //});
+
 
 });
