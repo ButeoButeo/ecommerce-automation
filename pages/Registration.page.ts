@@ -37,6 +37,11 @@ export class RegistrationPage {
   readonly acceptCreditAgrement: Locator
   readonly successRegistrationMsg: Locator
   readonly agree: Locator
+  //Last step
+  readonly tick: Locator
+  readonly lastContinueButton: Locator
+  readonly continueToMyAccount: Locator
+  readonly signinButton: Locator
   constructor(page: Page) {
     this.page = page
     this.email = page.getByRole('textbox', { name: 'Email:' });
@@ -47,7 +52,7 @@ export class RegistrationPage {
     this.month = page.getByLabel('Month')
     this.year = page.getByLabel('Year')
     this.phone = page.getByRole('textbox', { name: 'Provide a contact number:' })
-    this.password = page.getByRole('textbox', { name: 'Password:' })
+    this.password = page.getByRole('textbox', { name: 'Password' })
     this.continueWithEmails = page.getByRole('link', { name: 'Continue with emails' });
     this.firstNameValidationError = page.getByText('Please enter a valid first');
     this.lastNameValidationError = page.getByText('Please enter a valid last')
@@ -73,6 +78,11 @@ export class RegistrationPage {
     this.acceptCreditAgrement = page.getByRole('link', { name: 'Accept credit agreement' });
     this.successRegistrationMsg = page.getByText('Thanks for Registering Your')
     this.agree = page.locator('label').filter({ hasText: 'Tick here to confirm you have' })
+    //last step
+    this.tick = page.locator('label').filter({ hasText: 'Tick here if you don\'t want' })
+    this.lastContinueButton = page.getByRole('link', { name: 'Continue' })
+    this.continueToMyAccount = page.getByRole('link', { name: 'My Account' })
+    this.signinButton = page.getByRole('button', { name: 'Sign in' })
   }
   /**
    * 

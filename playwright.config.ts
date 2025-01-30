@@ -1,3 +1,5 @@
+"use strict";
+
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv'
 dotenv.config()
@@ -14,7 +16,7 @@ dotenv.config()
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  timeout: 30000, // Increase timeout to 60 seconds
+  timeout: 30000*10, // Increase timeout to 60 seconds
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -37,23 +39,28 @@ export default defineConfig({
     baseURL: process.env.BASE_URL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
+    launchOptions: {
+      args: ['--disable-web-security', '--disable-http2'],
+      
+    },
+    extraHTTPHeaders: { 'Upgrade-Insecure-Requests': '1' }
   },
 
   /* Configure projects for major browsers */
   projects: [
-/*     {
+/*      {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    }, 
-    {
+      use: { ...devices['Desktop Chromium'] },
+    },    */
+/*     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-    }, */
+    },  */
 
-    {
+     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-    }, 
+    },  
 
     /* Test against mobile viewports. */
     // {

@@ -24,7 +24,10 @@ For example, assuming we want to test the ecommerce-automation application, the 
 
 ```dotenv
 BASE_URL=https://www.fashionworld.co.uk/ # This will run the tests against the web application
+BASIC_AUTH_EMAIL=your account email
+BASIC_AUTH_PASSWORD=your password email
 ```
+For security reasons the new browser may ask for a sended email code to login validation. In proper staging envirment this step should be asked to be disabled in order to run automation testing.
 
 # Dependencies 
 

@@ -1,11 +1,46 @@
-import { expect, test } from '@playwright/test'
-import { RegistrationPage } from '../pages/Registration.page'
-import { LandingPage } from '../pages/Landing.page'
+import { type Locator, type Page } from '@playwright/test'
+import { test, expect } from '../fixtures/pom.fixture'
+import { LandingPage} from '../pages/Landing.page'
+import { RegistrationPage} from '../pages/Registration.page'
 
-//Justification: This is a critical feature as it allows users to create accounts, which is the entry point for personalizing their shopping experience and securing their data.
-  test('Authentication Registration', async ({ page}) => {
-    const registrationPage = new RegistrationPage(page);
-    const landingPage = new LandingPage(page);
+export class LogInPage {
+  readonly page: Page
+  readonly emailAddress: Locator
+  readonly continue: Locator
+  readonly password: Locator
+  readonly signupAction: Locator
+
+  constructor(page: Page) {
+    this.page = page
+    this.emailAddress = page.getByRole('textbox', { name: 'Email or account number' })
+    this.password = page.getByRole('textbox', { name: 'Password' })
+    //this.continue = page.getByRole('button', { name: 'Continue', exact: true })
+    this.signupAction = page.getByRole('button', { name: 'Sign in' })
+  }
+
+  async fillEmail(email: string, password: string) {
+    await this.emailAddress.fill(email)
+    await this.password.clear()
+    await this.password.fill(password)
+    await this.signupAction.click()
+  }
+
+  async fillPassword(password: string) {
+    await this.password.clear()
+    await this.password.fill(password)
+    await this.signupAction.click()
+  }
+
+  async doLogIn({ email, password }: { email: string; password: string }) {
+    await this.page.goto('/')
+    await this.page.getByRole('button', { name: 'Accept All Cookies' }).click();
+    await this.page.locator('.gui-dropdown-toggle').click();
+    await this.page.getByRole('link', { name: 'Register' }).click();
+    await this.fillEmail(email, password)
+  }
+  async doSignUp({ email, password }: { email: string; password: string }) {
+    const registrationPage = new RegistrationPage(this.page);
+    const landingPage = new LandingPage(this.page);
     //TC Scenario 1: - Validation for Mandatory Fields
     //step 1 - visit landing page and click on register
     await landingPage.visitPage();
@@ -46,7 +81,7 @@ import { LandingPage } from '../pages/Landing.page'
     // step 8 - Submit the third step registration form "Address"
     await registrationPage.houseNumberOrName.fill('Brunswick Park Rd');
     await registrationPage.postCode.fill('WS109HP');
-    await page.keyboard.press('Enter');
+    await this.page.keyboard.press('Enter');
     // step 9 - validate address found
     await registrationPage.adressFound.hover()
     await expect(registrationPage.adressFound).toBeVisible();
@@ -62,17 +97,14 @@ import { LandingPage } from '../pages/Landing.page'
     await registrationPage.acceptCreditAgrement.click();
     await registrationPage.successRegistrationMsg.hover()
     const successMesg = await registrationPage.successRegistrationMsg.innerText();
-        await expect(registrationPage.successRegistrationMsg).toContainText('Thanks for Registering Your');
-        await registrationPage.tick.click();
-        //await registrationPage.lastContinueButton.click();
-        await registrationPage.continueToMyAccount.click();
-        await registrationPage.password.waitFor()
-        await registrationPage.password.fill("Aa123456789@2025");
-        await registrationPage.signinButton.click();
-        await landingPage.myAccount.click();
-        await expect(landingPage.logout).toBeVisible();
-  });
-
-
-
-
+    await expect(registrationPage.successRegistrationMsg).toContainText('Thanks for Registering Your');
+    await registrationPage.tick.click();
+    //await registrationPage.lastContinueButton.click();
+    await registrationPage.continueToMyAccount.click();
+    await registrationPage.password.waitFor()
+    await registrationPage.password.fill('Aa123456789@2025');
+    await registrationPage.signinButton.click();
+    await landingPage.myAccount.click();
+    await expect(landingPage.logout).toBeVisible();
+  }
+}
