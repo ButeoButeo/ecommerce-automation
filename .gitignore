@@ -11,4 +11,4 @@ node_modules/
 
 .env**
 !**/.env-cmdrc.json
-.zshrc
+ecommerce-automation/.auth/user.json

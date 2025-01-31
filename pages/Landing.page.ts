@@ -7,6 +7,7 @@ export class LandingPage {
   readonly newCustomer: Locator
   //navigation menu bar
   readonly womens: Locator
+  readonly fashionWorld: Locator
     //sub-navigation menu bar
     readonly accessories: Locator
       //acessory sub-menu accessories items page
@@ -32,12 +33,14 @@ export class LandingPage {
   readonly firstProductFromList : Locator
   //sorting products
   readonly sortByLowestPrice : Locator
-  // Item detais
+  // Item detais Bag
   readonly addToBag : Locator
   readonly successMsgAddBag : Locator
   readonly closeSuccessMsg : Locator
   readonly myBag : Locator
   readonly checkOut:Locator
+  readonly removeItemFromBag:Locator
+  readonly closeBag:Locator
   // promo codes 
   readonly promoCode : Locator
   readonly addCodeButton : Locator
@@ -49,6 +52,7 @@ export class LandingPage {
     this.newCustomer = page.getByRole('link', { name: 'I\'m a new customer' })
     //navigation menu bar
     this.womens = page.getByRole('link', { name: 'Womens', exact: true })
+    this.fashionWorld = page.getByAltText('Fashion World')
       //sub-navigation menu bar
       this.accessories = page.getByRole('banner').getByRole('link', { name: 'Accessories' })
       //acessory sub-menu bag items page
@@ -74,29 +78,21 @@ export class LandingPage {
     this.firstProductFromList = page.locator('.product__title.js-product-title').first()
     //sorting products
     this.sortByLowestPrice = page.getByLabel('Sort By:')
-    // Item detais
-    this.addToBag = page.getByTitle('Add to Bag')
+    // Item detais Bag
+    this.addToBag = page.getByTitle('Add to bag')
     this.successMsgAddBag = page.getByRole('heading', { name: 'Great choice, you deserve it !' })
     this.closeSuccessMsg = page.locator('#postAddToBagModal > .modal-html > .modal-header > .block-2 > .modal-close > .gui-btn')
     this.myBag = page.getByRole('button', { name: 'My Bag' })
     this.checkOut = page.getByRole('link', { name: 'Continue to Checkout' })
+    this.removeItemFromBag = page.getByTitle('Remove item from bag')
+    this.closeBag = page.getByRole('button', { name: 'Close' })
     // promo codes 
      this.promoCode = page.locator('#claimcode')
      this.addCodeButton = page.locator('.promo-details-btn')
      this.promoCodeerror = page.getByText('Sorry, we don’t recognise the')
   }
   async visitPage() {
-    await this.page.setExtraHTTPHeaders({
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-      'Accept-Language': 'en-GB,en-NZ;q=0.9,en-AU;q=0.8,en;q=0.7,en-US;q=0.6',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-      "hostname": "playwright-chrome",
-      "image": "dgtlmoon/sockpuppetbrowser:latest",
-      "restart": "unless-stopped",
-      "ignoreHTTPSErrors": "true",
-      "extraHTTPHeaders": "'Upgrade-Insecure-Requests': '1'"
-    });
-    await this.page.goto('');
+    await this.page.goto('/');
     await this.page.getByRole('button', { name: 'Accept All Cookies' }).click();
     await expect(this.page).toHaveURL('https://www.fashionworld.co.uk')
   }

@@ -1,24 +1,21 @@
-import { test, expect } from '../fixtures/pom.fixture'
-/* import { test, expect } from '@playwright/test'
-import { LandingPage } from '../pages/Landing.page' */
+import { test, expect } from '../../fixtures/pom.fixture'
 
-test.use({ authUser: 'signup-run-use-same-user' })
-//test.describe('Adding Products to Bag', () => {
-
-  test.skip('Adding Products to Bag - Add Single Product to Bag, Invalid  Promo Code and Log out', async ({ page, landingPage }) => {
+test.describe('Adding Products to Bag', () => {
+  test.only('run first -Adding Products to Bag - Add Single Product to Bag', async ({ page, landingPage }) => {
     //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.tech.hover(); // Navigate to a category tech
     await landingPage.tabletsiPads.click()
     await landingPage.firstProductFromList.click()// Navigate to a product page
-    await landingPage.addToBag.waitFor()
+    await page.waitForLoadState();
+    //await landingPage.addToBag.waitFor()
     await landingPage.addToBag.click({ force: true }) // Add product to bag
     await landingPage.successMsgAddBag.waitFor()
     await expect(landingPage.successMsgAddBag).toBeVisible()
     await landingPage.closeSuccessMsg.click()
     await landingPage.myBag.click()
-    await landingPage.checkBagNumberOfItemsAddes("1") // Verify item count in bag 
-  //});
+    await landingPage.checkBagNumberOfItemsAddes(1) // Verify item count in bag 
+  });
   //test('Add Multiple Products to Bag', async ({ page }) => {
 /*     const products = [`${baseURL}products/product-1`, `${baseURL}products/product-2`];
     for (const product of products) {
@@ -79,7 +76,7 @@ test.use({ authUser: 'signup-run-use-same-user' })
   const validPromoCode = 'HURRY'; // Replace with an actual valid promo code
   const expiredPromoCode = 'EXPIRED20'; // Replace with an expired promo code
   const invalidPromoCode = 'INVALIDCODE';
- // test('run second - Invalid  Promo Code', async ({ page, landingPage }) => {
+  test('run second - Invalid  Promo Code', async ({ page, landingPage }) => {
     //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.myBag.click()
@@ -89,16 +86,18 @@ test.use({ authUser: 'signup-run-use-same-user' })
     await landingPage.promoCodeerror.waitFor()
     await expect(landingPage.promoCodeerror).toBeVisible()
     const promoerror = await landingPage.promoCodeerror.textContent()
-    await expect(promoerror).toBe("Sorry, we don’t recognise the code 'INVALIDCODE'. Please check your code and try again, or try another code.")// Validate invalid code error message
+    expect(promoerror).toBe("Sorry, we don’t recognise the code 'INVALIDCODE'. Please check your code and try again, or try another code.")// Validate invalid code error message
 
- // });
+  });
 
-  //test('Valid Promo Code', async ({ page }) => {
-/*     await page.fill('input[name="promoCode"]', invalidPromoCode); // Enter an invalid promo code
-    await page.click('button:has-text("Apply")'); // Apply promo code
-    const errorMessage = await page.locator('.promo-error').textContent(); // Replace with actual selector
-    expect(errorMessage).toContain('Invalid promo code'); // Verify appropriate error message */
- // });
+  test('rum foufth - Remove/delete item from bag', async ({ page, landingPage }) => {
+    await landingPage.visitPageWithoutCookiesBanner();
+    await landingPage.myBag.click()
+    await landingPage.removeItemFromBag.click()
+    await page.waitForLoadState('networkidle')
+    await landingPage.closeBag.click()
+  });
+
 
  // test('Promo Code Expiry', async ({ page }) => {
 /*     await page.fill('input[name="promoCode"]', expiredPromoCode); // Enter an expired promo code
@@ -126,10 +125,5 @@ test.use({ authUser: 'signup-run-use-same-user' })
     const discount = await page.locator('.promo-discount').textContent(); // Verify discount removal
     expect(discount).toBe(''); // Ensure no discount is applied after removal */
  // });
- // test('run third - Log out', async ({ page , landingPage  }) => {
-    //const landingPage = new  LandingPage(page);
-    await landingPage.myAccount.click();
-    await landingPage.logout.click();
-    await expect(page).toHaveURL(/signoff=yes/); // Ensure logged out
- // });
+
 });
