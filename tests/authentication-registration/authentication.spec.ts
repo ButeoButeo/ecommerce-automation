@@ -3,7 +3,7 @@ import { RegistrationPage } from '../../pages/Registration.page'
 import { LandingPage } from '../../pages/Landing.page'
 
 //Justification: This is a critical feature as it allows users to create accounts, which is the entry point for personalizing their shopping experience and securing their data.
-  test('Authentication Registration', async ({ page}) => {
+  test(' Authentication Registration', async ({ page}) => {
     const registrationPage = new RegistrationPage(page);
     const landingPage = new LandingPage(page);
     //TC Scenario 1: - Validation for Mandatory Fields

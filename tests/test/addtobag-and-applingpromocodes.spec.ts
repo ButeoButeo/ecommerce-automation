@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/pom.fixture'
 
-test.describe('Adding Products to Bag', () => {
-  test('run first -Adding Products to Bag - Add Single Product to Bag', async ({ page, landingPage }) => {
+test.describe.serial('High Priority Tests - Adding Products to Bag',() => {
+  test('A runs first - Add Single Product to Bag', async ({ page, landingPage }) => {
     //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.tech.hover(); // Navigate to a category tech
@@ -17,8 +17,7 @@ test.describe('Adding Products to Bag', () => {
     await landingPage.checkBagNumberOfItemsAddes(1) // Verify item count in bag 
   });
 
-
-  test('run second - Invalid  Promo Code', async ({ page, landingPage }) => {
+  test('B runs second - Invalid  Promo Code', async ({ page, landingPage }) => {
     const validPromoCode = 'ENJOY'; // Replace with an actual valid promo code
     const expiredPromoCode = 'HURRY'; // Replace with an expired promo code
     const invalidPromoCode = 'INVALIDCODE'; // Replace with an invalid promo code
@@ -40,7 +39,7 @@ test.describe('Adding Products to Bag', () => {
     await expect(landingPage.promoCodeValidAdded).toBeVisible()
   });
 
-  test('rum third - Remove/delete items from bag', async ({ page, landingPage }) => {
+  test('C runs third - Remove/delete items from bag', async ({ page, landingPage }) => {
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.myBag.click()
     await landingPage.removeItemFromBag.click()// Remove product
@@ -49,5 +48,12 @@ test.describe('Adding Products to Bag', () => {
     await landingPage.checkBagNumberOfItemsAddes(0)// Verify bag is empty
     await landingPage.closeBag.click()
   });
+  test('D Log out', async ({ page , landingPage  }) => {
+    //const landingPage = new  LandingPage(page);
+    await landingPage.visitPageWithoutCookiesBanner();
+    await landingPage.myAccount.click();
+    await landingPage.logout.click();
+    await expect(page).toHaveURL(/signoff=yes/); // Ensure logged out
+  }); 
 
 });

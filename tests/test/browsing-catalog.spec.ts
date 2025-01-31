@@ -1,6 +1,6 @@
 import { test, expect } from '../../fixtures/pom.fixture'
 
-test.describe('Browsing the Catalog - basic', () => { 
+test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => { 
 //Justification: Smooth catalog browsing is critical for user engagement and product discovery.
   test('Category Navigation', async ({ page,landingPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
@@ -10,7 +10,7 @@ test.describe('Browsing the Catalog - basic', () => {
     await expect(landingPage.valentinoBag).toBeVisible(); // Verify product list is displayed
   });   
 
-  test('Search Functionality - basic', async ({ page,landingPage}) => {
+  test(' Search Functionality', async ({ page,landingPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.search.fill('dress'); // Fill search bar
     await landingPage.search.press('Enter'); // Submit search
@@ -19,7 +19,7 @@ test.describe('Browsing the Catalog - basic', () => {
     await expect(landingPage.dress).toContainText('Dress'); // Ensure search results is relevant
   }); 
 
-  test('Pagination - basic', async ({ page,landingPage}) => {
+  test(' Pagination ', async ({ page,landingPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.womens.click(); // Navigate to a category
     await expect(page).toHaveURL(/.*womens/); // Ensure URL includes navigate to a category
@@ -35,7 +35,7 @@ test.describe('Browsing the Catalog - basic', () => {
     await expect(landingPage.previous).not.toBeVisible(); // Verify pagination is visible
  });
 
-  test('Filter Products - basic', async ({ page,landingPage}) => {
+  test('Filter Products', async ({ page,landingPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.tech.hover(); // Navigate to a category tech
     await landingPage.tabletsiPads.click()
@@ -48,7 +48,7 @@ test.describe('Browsing the Catalog - basic', () => {
     await expect(page).toHaveURL(/.*Colour--Blue/); // Ensure URL includes navigate to a category tech
   });
 
-  test('Sorting Products - basic', async ({page,landingPage}) => {
+  test('Sorting Products ', async ({page,landingPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.womens.hover(); // Navigate to "Women" category 
     await landingPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category
