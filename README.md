@@ -8,7 +8,8 @@ This project contains automated test cases for the e-commerce website using Play
 1. Clone the repository:
    ```bash
    git clone https://github.com/ButeoButeo/ecommerce-automation
-   cd ecommerce-automation
+2. cd ecommerce-automation
+3. npm i
 
 ## Setting up the local environment
 Inside every application folder, there is a `.env.example` file that you can use as a template to create your own `.env` file.
@@ -32,9 +33,16 @@ For security reasons the new browser may ask for a sended email code to login va
 In proper staging environment this step should be asked to be disabled in order to run automation. 
 
 # Dependencies 
+  "@playwright/test": "^1.50.0",
+    "@types/node": "^22.10.10",
+    "allure-commandline": "^2.32.0",
+    "allure-playwright": "^3.0.9",
+    "dotenv": "^16.4.5"
 
 # Test execution 
-npx playwright test or npm test
+1. npm test:headed 
+2. Request and validate validation code during running setup.
+
 
 # Viewing reports - Generate allure reports
 npx allure generate allure-results —clean && npx allure open
