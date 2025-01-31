@@ -12,3 +12,4 @@ node_modules/
 .env**
 !**/.env-cmdrc.json
 ecommerce-automation/.auth/user.json
+playwright/.auth/user.json

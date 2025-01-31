@@ -27,7 +27,9 @@ BASE_URL=https://www.fashionworld.co.uk/ # This will run the tests against the w
 BASIC_AUTH_EMAIL=your account email
 BASIC_AUTH_PASSWORD=your password email
 ```
-For security reasons the new browser may ask for a sended email code to login validation. In proper staging envirment this step should be asked to be disabled in order to run automation testing.
+For security reasons the new browser may ask for a sended email code to login validation. Fill the code sended when run the setup(first to run)
+
+In proper staging environment this step should be asked to be disabled in order to run automation. 
 
 # Dependencies 
 

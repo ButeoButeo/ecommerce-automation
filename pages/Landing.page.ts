@@ -41,10 +41,13 @@ export class LandingPage {
   readonly checkOut:Locator
   readonly removeItemFromBag:Locator
   readonly closeBag:Locator
+  readonly removePromoCodeFromBag:Locator
   // promo codes 
   readonly promoCode : Locator
   readonly addCodeButton : Locator
   readonly promoCodeerror : Locator
+  readonly promoCodeValidAdded : Locator
+  readonly promoCodeExpired : Locator
   constructor(page: Page) {
     this.page = page
     this.myAccount = page.locator('.gui-dropdown-toggle');
@@ -86,10 +89,13 @@ export class LandingPage {
     this.checkOut = page.getByRole('link', { name: 'Continue to Checkout' })
     this.removeItemFromBag = page.getByTitle('Remove item from bag')
     this.closeBag = page.getByRole('button', { name: 'Close' })
+    this.removePromoCodeFromBag =  page.locator('a').filter({ hasText: 'Remove' }).first(),
     // promo codes 
-     this.promoCode = page.locator('#claimcode')
-     this.addCodeButton = page.locator('.promo-details-btn')
-     this.promoCodeerror = page.getByText('Sorry, we don’t recognise the')
+    this.promoCode = page.locator('#claimcode')
+    this.addCodeButton = page.locator('.promo-details-btn')
+    this.promoCodeerror = page.getByText('Sorry, we don’t recognise the')
+    this.promoCodeValidAdded = page.getByText('Promotion Code')
+    this.promoCodeExpired = page.getByText('Sorry, the code \'HURRY\' has')
   }
   async visitPage() {
     await this.page.goto('/');
