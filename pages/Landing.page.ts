@@ -106,6 +106,11 @@ export class LandingPage {
     await this.page.goto('/');
     await expect(this.page).toHaveURL('https://www.fashionworld.co.uk')
   }
+  async navigateToNewCustomer() {
+    await this.myAccount.click();
+    await this.register.click();
+    await this.newCustomer.click();
+  }
   async checkBagNumberOfItemsAddes(numberItems:number) {
     const bagItems = await this.page.getByText(`${numberItems} Item(s)`, { exact: true }).textContent()
     expect(bagItems).toBe(`${numberItems} Item(s)`)

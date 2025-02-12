@@ -13,3 +13,5 @@ node_modules/
 !**/.env-cmdrc.json
 ecommerce-automation/.auth/user.json
 playwright/.auth/user.json
+playwright/.auth/user.json
+playwright/.auth/user.json

@@ -15,7 +15,5 @@ setup('authenticate', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Password' }).fill(`${process.env.BASIC_AUTH_PASSWORD}`)
     await page.getByRole('button', { name: 'Sign in' }).click()
     await page.waitForLoadState('networkidle')
-    await page.waitForTimeout(20000)
-
-  await page.context().storageState({ path: authFile });
+    await page.context().storageState({ path: authFile });
 });

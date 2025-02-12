@@ -84,6 +84,7 @@ export class RegistrationPage {
     this.continueToMyAccount = page.getByRole('link', { name: 'My Account' })
     this.signinButton = page.getByRole('button', { name: 'Sign in' })
   }
+  
   /**
    * 
    * @param email 
