@@ -63,7 +63,10 @@ export class LandingPage {
       //acessory sub-menu dress items page
       this.dress = page.getByText('Phase Eight Veronica Pink')
       //pagination menu bar
-      this.pagination1Page = page.getByRole('listitem').filter({ hasText: '1'}).nth(80)
+      //this.pagination1Page = page.getByRole('listitem').filter({ hasText: '1'}).nth(80)
+      //locator('.pagination__items > li:nth-child(3)').first()
+      this.pagination1Page = page.locator('.js-pagination-items li')
+      //this.pagination2Page = page.locator('.js-pagination-items').locator('li').nth(2)
       this.pagination2Page = page.getByRole('link', { name: '2', exact: true })
       this.previous = page.getByRole('link', { name: 'Previous' }).nth(1)
     //search field

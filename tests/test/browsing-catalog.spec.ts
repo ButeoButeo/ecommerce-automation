@@ -24,16 +24,15 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await landingPage.womens.click(); // Navigate to a category
     await expect(page).toHaveURL(/.*womens/); // Ensure URL includes navigate to a category
     await landingPage.myBag.hover();
-    await expect(landingPage.pagination1Page).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
+    await expect(landingPage.pagination1Page.nth(1)).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
     await expect(landingPage.previous).not.toBeVisible(); // Verify pagination is visible
     await landingPage.pagination2Page.nth(1).click(); // Click next page button
     await page.waitForLoadState('domcontentloaded'); // Wait for page to load
     await landingPage.previous.waitFor()
     await expect(landingPage.previous).toBeVisible(); // Verify pagination previous is visible
     await landingPage.previous.click(); // Click previous page button
-    await page.waitForLoadState('domcontentloaded'); // Wait for page to load
-    await landingPage.pagination1Page.scrollIntoViewIfNeeded(); // Scroll to pagination 1
-    await expect(landingPage.pagination1Page).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
+    await landingPage.pagination1Page.nth(2).hover()
+    await expect(landingPage.pagination1Page.nth(0)).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
     await expect(landingPage.previous).not.toBeVisible(); // Verify pagination is visible
  });
 

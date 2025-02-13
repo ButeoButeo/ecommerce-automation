@@ -56,7 +56,7 @@ export default defineConfig({
         // Use prepared auth state.
         storageState: 'playwright/.auth/user.json',
        },
-      dependencies: ['setup'],
+      //dependencies: ['setup'],
     }, 
     {
       name: 'chromium registration',
