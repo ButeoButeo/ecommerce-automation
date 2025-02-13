@@ -2,34 +2,38 @@ import {expect, test } from "../../fixtures/pom.fixture"
 test.describe.configure({ mode: 'parallel' });
 //Justification: This is a critical feature as it allows users to create accounts, which is the entry point for personalizing their shopping experience and securing their data.
 test.describe(' Authentication-registration', async () => {
-  test('TC Scenario 1: - Navigate to crete new Customer', async ({ page, registrationPage, landingPage}) => {
-      //step 1 - visit landing page and click on register
-      await landingPage.visitPage();
-      await landingPage.navigateToNewCustomer()
-    });  
-  test('TC Scenario 2: - Validation for Mandatory Fields in registration form 1 details', async ({ page, registrationPage, landingPage}) => {
-      //step 2 - validation for mandatory fields first name and last name
-      await landingPage.visitPage();
-      await landingPage.navigateToNewCustomer()
-      await registrationPage.continueWithEmails.click();
-      await expect(registrationPage.email).toHaveCSS('border-color', 'rgb(254, 254, 254)');
-      await expect(registrationPage.titleLabel).toHaveCSS('border-color', 'rgb(254, 254, 254)');
-      await expect(registrationPage.day).toHaveCSS('border-color', 'rgb(254, 254, 254)');
-      await expect(registrationPage.month).toHaveCSS('border-color', 'rgb(254, 254, 254)');
-      await expect(registrationPage.year).toHaveCSS('border-color', 'rgb(254, 254, 254)');
-      await expect(registrationPage.phone).toHaveCSS('border-color', 'rgb(254, 254, 254)');
-      await expect(registrationPage.password).toHaveCSS('border-color', 'rgb(254, 254, 254)');
-      await expect(registrationPage.firstNameValidationError).toHaveText('Please enter a valid first name.');
-      await expect(registrationPage.lastNameValidationError).toHaveText('Please enter a valid last name.');
-      await expect(registrationPage.firstName).toHaveCSS('border-color', 'rgb(212, 0, 0)');
-      await expect(registrationPage.lastName).toHaveCSS('border-color', 'rgb(212, 0, 0)');
-  
-  /* //step 3 - validation invalid Email Format
-  await registrationPage.fillDetailsForm1('aasdas@dass', 'Mr', 'John', 'Doe', '1', 'January', '1990', '1234567890', 'P@ssw0rd123');
-  await registrationPage.continueWithEmails.click();
-  await expect(registrationPage.email).toHaveCSS('border-color', 'rgb(212, 0, 0)');
-  await expect(registrationPage.emailFormatValidationError).toHaveText('Please enter your email address. This email address is not valid.');
-  //step 4 - validation for password strength
+  test('TC Scenario 1: - Navigate to crete new Customer', async ({ landingPage}) => {
+    //step 1 - visit landing page and click on register
+    await landingPage.visitPage();
+    await landingPage.navigateToNewCustomer()
+  });  
+  test('TC Scenario 2: - Validation for Mandatory Fields in registration form 1 details', async ({landingPage , formStep1DetailsPage}) => {
+    //step 2 - validation for mandatory fields first name and last name
+    await landingPage.visitPage();
+    await landingPage.navigateToNewCustomer()
+    await formStep1DetailsPage.continueWithEmails.click();
+    await expect(formStep1DetailsPage.email).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+    await expect(formStep1DetailsPage.titleLabel).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+    await expect(formStep1DetailsPage.day).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+    await expect(formStep1DetailsPage.month).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+    await expect(formStep1DetailsPage.year).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+    await expect(formStep1DetailsPage.phone).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+    await expect(formStep1DetailsPage.password).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+    await expect(formStep1DetailsPage.firstNameValidationError).toHaveText('Please enter a valid first name.');
+    await expect(formStep1DetailsPage.lastNameValidationError).toHaveText('Please enter a valid last name.');
+    await expect(formStep1DetailsPage.firstName).toHaveCSS('border-color', 'rgb(212, 0, 0)');
+    await expect(formStep1DetailsPage.lastName).toHaveCSS('border-color', 'rgb(212, 0, 0)');
+  });  
+  test('TC Scenario 3: - Validation for Mandatory Fields in registration form 1 details', async ({landingPage , formStep1DetailsPage}) => {
+    //step 3 - validation invalid Email Format
+    await landingPage.visitPage();
+    await landingPage.navigateToNewCustomer()
+    await formStep1DetailsPage.fillDetailsForm1('aasdas@dass', 'Mr', 'John', 'Doe', '1', 'January', '1990', '1234567890', 'P@ssw0rd123');
+    await formStep1DetailsPage.continueWithEmails.click();
+    await expect(formStep1DetailsPage.email).toHaveCSS('border-color', 'rgb(212, 0, 0)');
+    await expect(formStep1DetailsPage.emailFormatValidationError).toHaveText('Please enter your email address. This email address is not valid.');
+  });  
+  /*  //step 4 - validation for password strength
   await expect(registrationPage.passwordValidationError).toHaveText('Please use at least 12 characters, including lowercase and uppercase letters.');
   await registrationPage.fillDetailsForm1('aasdas@dass.com', 'Mr', 'John', 'Doe', '1', 'January', '1990', '1234567890', 'Aa123456789@2025');
   await registrationPage.continueWithEmails.click();
@@ -77,7 +81,7 @@ test.describe(' Authentication-registration', async () => {
 /*   await page.getByRole('heading', { name: 'Application unsuccessful' }).hover();
   await expect(page.getByRole('heading', { name: 'Application unsuccessful' })).toBeVisible(); */
 
-});  
+
 });  
 
  

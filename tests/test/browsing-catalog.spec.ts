@@ -23,14 +23,16 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.womens.click(); // Navigate to a category
     await expect(page).toHaveURL(/.*womens/); // Ensure URL includes navigate to a category
-    await expect(landingPage.pagination1Page).toHaveClass('pagination__item pagination__item_pages'); // Verify pagination 1 is the current page
+    await landingPage.myBag.hover();
+    await expect(landingPage.pagination1Page).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
     await expect(landingPage.previous).not.toBeVisible(); // Verify pagination is visible
     await landingPage.pagination2Page.nth(1).click(); // Click next page button
-    await page.waitForLoadState('networkidle'); // Wait for page to load
+    await page.waitForLoadState('domcontentloaded'); // Wait for page to load
     await landingPage.previous.waitFor()
     await expect(landingPage.previous).toBeVisible(); // Verify pagination previous is visible
     await landingPage.previous.click(); // Click previous page button
-    await page.waitForLoadState('networkidle'); // Wait for page to load
+    await page.waitForLoadState('domcontentloaded'); // Wait for page to load
+    await landingPage.pagination1Page.scrollIntoViewIfNeeded(); // Scroll to pagination 1
     await expect(landingPage.pagination1Page).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
     await expect(landingPage.previous).not.toBeVisible(); // Verify pagination is visible
  });
@@ -54,6 +56,7 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await landingPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category
     await expect(page).toHaveURL(/.*womens\/\accessories/); // Ensure the URL corresponds to the "
     await landingPage.sortByLowestPrice.selectOption('Lowest Price'); // Sort by "Price: Low to High"
+    await page.waitForLoadState('domcontentloaded'); // Wait for page to load
     await expect(page).toHaveURL(/.*sort=Lowest/); // Ensure the URL corresponds
     const prices = await page.locator('.product-price').allTextContents();
     const numericPrices = prices.map(price => parseFloat(price.replace('£', '')));

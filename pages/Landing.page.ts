@@ -7,7 +7,7 @@ export class LandingPage {
   readonly newCustomer: Locator
   //navigation menu bar
   readonly womens: Locator
-  readonly fashionWorld: Locator
+  readonly fashionWorldLogo: Locator
     //sub-navigation menu bar
     readonly accessories: Locator
       //acessory sub-menu accessories items page
@@ -55,7 +55,7 @@ export class LandingPage {
     this.newCustomer = page.getByRole('link', { name: 'I\'m a new customer' })
     //navigation menu bar
     this.womens = page.getByRole('link', { name: 'Womens', exact: true })
-    this.fashionWorld = page.getByAltText('Fashion World')
+    this.fashionWorldLogo = page.getByAltText('Fashion World')
       //sub-navigation menu bar
       this.accessories = page.getByRole('banner').getByRole('link', { name: 'Accessories' })
       //acessory sub-menu bag items page
@@ -63,7 +63,7 @@ export class LandingPage {
       //acessory sub-menu dress items page
       this.dress = page.getByText('Phase Eight Veronica Pink')
       //pagination menu bar
-      this.pagination1Page = page.locator('.pagination__items > li').first()
+      this.pagination1Page = page.getByRole('listitem').filter({ hasText: '1'}).nth(80)
       this.pagination2Page = page.getByRole('link', { name: '2', exact: true })
       this.previous = page.getByRole('link', { name: 'Previous' }).nth(1)
     //search field
@@ -84,7 +84,7 @@ export class LandingPage {
     // Item detais Bag
     this.addToBag = page.getByTitle('Add to bag')
     this.successMsgAddBag = page.getByRole('heading', { name: 'Great choice, you deserve it !' })
-    this.closeSuccessMsg = page.locator('#postAddToBagModal > .modal-html > .modal-header > .block-2 > .modal-close > .gui-btn')
+    this.closeSuccessMsg = page.locator('#postAddToBagModal .gui-btn').first()
     this.myBag = page.getByRole('button', { name: 'My Bag' })
     this.checkOut = page.getByRole('link', { name: 'Continue to Checkout' })
     this.removeItemFromBag = page.getByTitle('Remove item from bag')
@@ -106,16 +106,20 @@ export class LandingPage {
     await this.page.goto('/');
     await expect(this.page).toHaveURL('https://www.fashionworld.co.uk')
   }
+  async navigateToLogIn() {
+    await this.myAccount.click();
+    await this.register.click();
+  }
   async navigateToNewCustomer() {
     await this.myAccount.click();
     await this.register.click();
     await this.newCustomer.click();
   }
-  async checkBagNumberOfItemsAddes(numberItems:number) {
+  async checkBagNumberOfItemsAdded(numberItems:number) {
     const bagItems = await this.page.getByText(`${numberItems} Item(s)`, { exact: true }).textContent()
     expect(bagItems).toBe(`${numberItems} Item(s)`)
   }
-  async AddPromoCode(code:string) {
+  async addPromoCode(code:string) {
     await this.promoCode.fill(`${code}`)// Enter the valid promo code
     await this.addCodeButton.click() // Apply promo code
   }
