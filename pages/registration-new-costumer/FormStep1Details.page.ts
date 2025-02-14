@@ -63,5 +63,31 @@ export class FormStep1DetailsPage {
     await this.phone.fill(`${phone}`);
     await this.password.fill(`${password}`);
 }
+async validateMandatoryFields() {
+  await expect(this.email).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+  await expect(this.titleLabel).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+  await expect(this.day).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+  await expect(this.month).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+  await expect(this.year).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+  await expect(this.phone).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+  await expect(this.password).toHaveCSS('border-color', 'rgb(254, 254, 254)');
+  await expect(this.firstNameValidationError).toHaveText('Please enter a valid first name.');
+  await expect(this.lastNameValidationError).toHaveText('Please enter a valid last name.');
+  await expect(this.firstName).toHaveCSS('border-color', 'rgb(212, 0, 0)');
+  await expect(this.lastName).toHaveCSS('border-color', 'rgb(212, 0, 0)');
+}
+async validateInvalidEmailFormat() {
+  await expect(this.email).toHaveCSS('border-color', 'rgb(212, 0, 0)');
+  await expect(this.emailFormatValidationError).toHaveText('Please enter your email address. This email address is not valid.');
+}
+
+async validatePasswordStrength() {
+  await expect(this.passwordValidationError).toHaveText('Please use at least 12 characters, including lowercase and uppercase letters.');
+}
+
+async validatePhoneNumberFormat() {
+  await expect(this.phoneNumberValidationError).toHaveText('This phone number is not valid.');
+  await expect(this.phone).toHaveCSS('border-color', 'rgb(212, 0, 0)');
+}
 
 }

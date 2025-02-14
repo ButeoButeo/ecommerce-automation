@@ -56,13 +56,18 @@ export default defineConfig({
         // Use prepared auth state.
         storageState: 'playwright/.auth/user.json',
        },
-      //dependencies: ['setup'],
+      dependencies: ['setup'],
     }, 
     {
       name: 'chromium registration',
       testDir: './tests/authentication-registration',
       use: { ...devices['Desktop Chromium']},
-    }
+    }, 
+    {
+      name: 'Safari sign-in',
+      testDir: './tests/sign-in',
+      use: { ...devices['Desktop webkit']},
+    } 
 /*     {
       name: 'firefox',
       testDir: './tests/test',

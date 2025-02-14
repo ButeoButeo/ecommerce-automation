@@ -15,8 +15,7 @@ export class LandingPage {
       //acessory sub-menu Dress items page
       readonly dress: Locator
       //pagination menu bar
-      readonly pagination1Page: Locator
-      readonly pagination2Page: Locator
+      readonly pagination: Locator
       readonly previous: Locator
   //search field
   readonly search: Locator
@@ -63,11 +62,7 @@ export class LandingPage {
       //acessory sub-menu dress items page
       this.dress = page.getByText('Phase Eight Veronica Pink')
       //pagination menu bar
-      //this.pagination1Page = page.getByRole('listitem').filter({ hasText: '1'}).nth(80)
-      //locator('.pagination__items > li:nth-child(3)').first()
-      this.pagination1Page = page.locator('.js-pagination-items li')
-      //this.pagination2Page = page.locator('.js-pagination-items').locator('li').nth(2)
-      this.pagination2Page = page.getByRole('link', { name: '2', exact: true })
+      this.pagination = page.locator('.js-product-pagination').locator('li')
       this.previous = page.getByRole('link', { name: 'Previous' }).nth(1)
     //search field
     this.search = page.getByRole('textbox', { name: 'Search' })
@@ -126,4 +121,5 @@ export class LandingPage {
     await this.promoCode.fill(`${code}`)// Enter the valid promo code
     await this.addCodeButton.click() // Apply promo code
   }
+
 }

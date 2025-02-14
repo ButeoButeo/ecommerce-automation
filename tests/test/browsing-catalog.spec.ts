@@ -24,15 +24,26 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await landingPage.womens.click(); // Navigate to a category
     await expect(page).toHaveURL(/.*womens/); // Ensure URL includes navigate to a category
     await landingPage.myBag.hover();
-    await expect(landingPage.pagination1Page.nth(1)).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
+    await expect(landingPage.pagination.nth(1)).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
     await expect(landingPage.previous).not.toBeVisible(); // Verify pagination is visible
-    await landingPage.pagination2Page.nth(1).click(); // Click next page button
+    await landingPage.pagination.nth(2).click(); // Click next page button
+    await expect(landingPage.pagination.nth(2)).toBeEnabled(); // Verify pagination 2 is enabled
     await page.waitForLoadState('domcontentloaded'); // Wait for page to load
+    await expect(landingPage.pagination.nth(2)).toHaveClass('js-facet-selection pagination__item_active'); 
     await landingPage.previous.waitFor()
     await expect(landingPage.previous).toBeVisible(); // Verify pagination previous is visible
+    await landingPage.pagination.nth(1).click(); // Click page 1 button
+    await expect(landingPage.pagination.nth(1)).toBeEnabled(); // Verify pagination 1 is enabled
+    await page.reload(); // Reload page
+    await page.waitForLoadState('networkidle'); // Wait for page to load
     await landingPage.previous.click(); // Click previous page button
-    await landingPage.pagination1Page.nth(2).hover()
-    await expect(landingPage.pagination1Page.nth(0)).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
+    await landingPage.pagination.nth(1).click()
+    await expect(landingPage.pagination.nth(1)).toBeEnabled(); // Verify pagination 1 is enabled
+    await page.waitForLoadState('domcontentloaded'); // Wait
+    await landingPage.pagination.nth(2).scrollIntoViewIfNeeded(); // Scroll to pagination 1
+    await page.reload(); // Reload page
+    await expect(landingPage.pagination.nth(1)).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
+    await page.reload(); // Reload page
     await expect(landingPage.previous).not.toBeVisible(); // Verify pagination is visible
  });
 
@@ -55,7 +66,7 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await landingPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category
     await expect(page).toHaveURL(/.*womens\/\accessories/); // Ensure the URL corresponds to the "
     await landingPage.sortByLowestPrice.selectOption('Lowest Price'); // Sort by "Price: Low to High"
-    await page.waitForLoadState('domcontentloaded'); // Wait for page to load
+    await landingPage.myAccount.click();
     await expect(page).toHaveURL(/.*sort=Lowest/); // Ensure the URL corresponds
     const prices = await page.locator('.product-price').allTextContents();
     const numericPrices = prices.map(price => parseFloat(price.replace('£', '')));

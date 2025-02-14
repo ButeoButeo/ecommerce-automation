@@ -1,5 +1,12 @@
 import { test, expect } from '../../fixtures/pom.fixture'
 
+const VALID_PROMO_CODE = 'LOOKS'; // Replace with an actual valid promo code
+const EXPIRED_PROMO_CODE = 'HURRY'; // Replace with an expired promo code
+const INVALID_PROMO_CODE = 'INVALIDCODE'; // Replace with an invalid promo code
+
+const INVALID_PROMO_CODE_ERROR = "Sorry, we don’t recognise the code 'INVALIDCODE'. Please check your code and try again, or try another code.";
+const EXPIRED_PROMO_CODE_ERROR = "Sorry, the code 'HURRY' has now expired. Please try another code.";
+
 test.describe.serial('High Priority Tests - Adding Products to Bag',() => {
   test('A runs first - Add Single Product to Bag', async ({ page, landingPage }) => {
     //const landingPage = new  LandingPage(page);
@@ -18,23 +25,27 @@ test.describe.serial('High Priority Tests - Adding Products to Bag',() => {
   });
 
   test('B runs second - Invalid  Promo Code', async ({ page, landingPage }) => {
-    const validPromoCode = 'LOOKS'; // Replace with an actual valid promo code
-    const expiredPromoCode = 'HURRY'; // Replace with an expired promo code
-    const invalidPromoCode = 'INVALIDCODE'; // Replace with an invalid promo code
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.myBag.click()
     await landingPage.checkOut.click()
     await landingPage.promoCode.waitFor()
-    await landingPage.addPromoCode(`${invalidPromoCode}`); // Enter the valid promo code, Apply promo code
+
+    // Test invalid promo code
+    await landingPage.addPromoCode(INVALID_PROMO_CODE); // Enter the valid promo code, Apply promo code
     await landingPage.promoCodeerror.waitFor()
     await expect(landingPage.promoCodeerror).toBeVisible()
     const promoerror = await landingPage.promoCodeerror.textContent()
-    expect(promoerror).toBe("Sorry, we don’t recognise the code 'INVALIDCODE'. Please check your code and try again, or try another code.")// Validate invalid code error message
-    await landingPage.addPromoCode(`${expiredPromoCode}`); // Enter the expired promo code, Apply promo code
+    expect(promoerror).toBe(INVALID_PROMO_CODE_ERROR)// Validate invalid code error message
+
+    // Test expired promo code
+    await landingPage.addPromoCode(EXPIRED_PROMO_CODE); // Enter the expired promo code, Apply promo code
     await landingPage.promoCodeExpired.waitFor()
     const promoerrorexpired = await landingPage.promoCodeExpired.textContent()
     expect(promoerrorexpired).toBe("Sorry, the code 'HURRY' has now expired. Please try another code.")// Validate invalid code error message
-    await landingPage.addPromoCode(`${validPromoCode}`); // Enter the valid promo code, Apply promo code
+    await landingPage.addPromoCode(EXPIRED_PROMO_CODE_ERROR); // Enter the valid promo code, Apply promo code
+
+    // Test valid promo code
+    await landingPage.addPromoCode(VALID_PROMO_CODE); // Enter the valid promo code, Apply promo code
     await expect(landingPage.promoCodeerror).not.toBeVisible()
     await expect(landingPage.promoCodeValidAdded).toBeVisible()
   });
