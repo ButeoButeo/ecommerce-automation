@@ -1,21 +1,13 @@
-import { test as setup, expect } from '@playwright/test';
-import path from 'path';
+import { test as setup, expect } from '../fixtures/pom.fixture';
 
+setup('authenticate', async ({ page, landingPage, signInRegisterPage }) => {
+    await landingPage.visitPage()
+    await landingPage.navigateToLogIn()
+    await signInRegisterPage.signInUserAccount()
 
-
-const authFile = path.join(__dirname, '../playwright/.auth/user.json');
-
-setup('authenticate', async ({ page }) => {
-    await page.goto('/')
-    await page.getByRole('button', { name: 'Accept All Cookies' }).click();
-    await page.locator('.gui-dropdown-toggle').click();
-    await page.getByRole('link', { name: 'Register' }).click();
-    await page.getByRole('textbox', { name: 'Email or account number' }).fill(`${process.env.BASIC_AUTH_EMAIL}`)
-    await page.getByRole('textbox', { name: 'Password' }).clear()
-    await page.getByRole('textbox', { name: 'Password' }).fill(`${process.env.BASIC_AUTH_PASSWORD}`)
-    await page.getByRole('button', { name: 'Sign in' }).click()
-    await page.waitForLoadState('networkidle')
-    await page.waitForTimeout(20000)
-
-  await page.context().storageState({ path: authFile });
+    // Verify successful sign-in by checking for a specific element on the dashboard
+    await expect(page).toHaveURL(`${process.env.URL_AFTER_SIGNIN}`); // Replace with the actual URL pattern after sign-in
+    await expect(landingPage.myAccount).toBeVisible();
+    await landingPage.myAccount.click();
+    await expect(landingPage.logout).toBeVisible();
 });
