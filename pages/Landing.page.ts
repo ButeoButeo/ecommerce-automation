@@ -7,32 +7,17 @@ export class LandingPage {
   readonly newCustomer: Locator
   //navigation menu bar
   readonly womens: Locator
-  readonly fashionWorldLogo: Locator
-    //sub-navigation menu bar
-    readonly accessories: Locator
-      //acessory sub-menu accessories items page
-      readonly valentinoBag: Locator
-      //acessory sub-menu Dress items page
-      readonly dress: Locator
-      //pagination menu bar
-      readonly pagination: Locator
-      readonly previous: Locator
+  readonly tech : Locator
+      //sub-navigation menu bar
+      readonly accessories: Locator
+      readonly tabletsiPads : Locator
+  //Main Logo
+  readonly fashionWorldLogo: Locator  
   //search field
   readonly search: Locator
   //log out button
   readonly logout: Locator
-  // technology filter
-  readonly tech : Locator
-  readonly tabletsiPads : Locator
-  readonly screenSize : Locator
-  readonly tabletTypeIpad : Locator
-  readonly onSale  : Locator
-  readonly colourBlue : Locator
-  readonly review : Locator
-  readonly firstProductFromList : Locator
-  //sorting products
-  readonly sortByLowestPrice : Locator
-  // Item detais Bag
+  // Item details Bag
   readonly addToBag : Locator
   readonly successMsgAddBag : Locator
   readonly closeSuccessMsg : Locator
@@ -52,33 +37,18 @@ export class LandingPage {
     this.myAccount = page.locator('.gui-dropdown-toggle');
     this.register = page.getByRole('link', { name: 'Register' })
     this.newCustomer = page.getByRole('link', { name: 'I\'m a new customer' })
-    //navigation menu bar
+    //Main navigation menu bar
+    this.tech = page.getByRole('link', { name: 'Technology' })
     this.womens = page.getByRole('link', { name: 'Womens', exact: true })
+        //sub-navigation menu bar
+        this.accessories = page.getByRole('banner').getByRole('link', { name: 'Accessories' })
+        this.tabletsiPads = page.getByRole('link', { name: 'iPads & Tablets' })
+    //Main Logo
     this.fashionWorldLogo = page.getByAltText('Fashion World')
-      //sub-navigation menu bar
-      this.accessories = page.getByRole('banner').getByRole('link', { name: 'Accessories' })
-      //acessory sub-menu bag items page
-      this.valentinoBag = page.getByText('Valentino Bags Alexia Grey')
-      //acessory sub-menu dress items page
-      this.dress = page.getByText('Phase Eight Veronica Pink')
-      //pagination menu bar
-      this.pagination = page.locator('.js-product-pagination').locator('li')
-      this.previous = page.getByRole('link', { name: 'Previous' }).nth(1)
     //search field
     this.search = page.getByRole('textbox', { name: 'Search' })
     //log out button
     this.logout = page.getByRole('link', { name: 'Sign Out' })
-    // technology filter
-    this.tech = page.getByRole('link', { name: 'Technology' })
-    this.tabletsiPads = page.getByRole('link', { name: 'iPads & Tablets' })
-    this.screenSize = page.getByRole('link', { name: 'refine via Screen Size 5 - 10' })
-    this.tabletTypeIpad =  page.getByRole('link', { name: 'refine via Tablet Type iPad' })
-    this.onSale = page.getByRole('link', { name: 'refine via On Sale Yes' })
-    this.colourBlue = page.getByRole('link', { name: 'refine via Colour Blue' })
-    this.review = page.getByRole('link', { name: 'refine via Reviews 5 Star' })
-    this.firstProductFromList = page.locator('.product__title.js-product-title').first()
-    //sorting products
-    this.sortByLowestPrice = page.getByLabel('Sort By:')
     // Item detais Bag
     this.addToBag = page.getByTitle('Add to bag')
     this.successMsgAddBag = page.getByRole('heading', { name: 'Great choice, you deserve it !' })

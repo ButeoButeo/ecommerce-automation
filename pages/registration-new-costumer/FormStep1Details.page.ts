@@ -1,5 +1,9 @@
 import { type Locator, type Page, expect } from '@playwright/test'
 
+const INVALID_EMAIL_ERROR = 'Please enter your email address. This email address is not valid.';
+const INVALID_PASSWORD_ERROR = 'Please use at least 12 characters, including lowercase and uppercase letters.';
+const INVALID_PHONE_ERROR = 'This phone number is not valid.';
+
 export class FormStep1DetailsPage {
   readonly page: Page
   // 1st registration form
@@ -78,15 +82,15 @@ async validateMandatoryFields() {
 }
 async validateInvalidEmailFormat() {
   await expect(this.email).toHaveCSS('border-color', 'rgb(212, 0, 0)');
-  await expect(this.emailFormatValidationError).toHaveText('Please enter your email address. This email address is not valid.');
+  await expect(this.emailFormatValidationError).toHaveText(INVALID_EMAIL_ERROR);
 }
 
 async validatePasswordStrength() {
-  await expect(this.passwordValidationError).toHaveText('Please use at least 12 characters, including lowercase and uppercase letters.');
+  await expect(this.passwordValidationError).toHaveText(INVALID_PASSWORD_ERROR);
 }
 
 async validatePhoneNumberFormat() {
-  await expect(this.phoneNumberValidationError).toHaveText('This phone number is not valid.');
+  await expect(this.phoneNumberValidationError).toHaveText(INVALID_PHONE_ERROR);
   await expect(this.phone).toHaveCSS('border-color', 'rgb(212, 0, 0)');
 }
 

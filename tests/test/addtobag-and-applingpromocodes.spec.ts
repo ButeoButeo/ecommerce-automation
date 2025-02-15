@@ -8,12 +8,12 @@ const INVALID_PROMO_CODE_ERROR = "Sorry, we don’t recognise the code 'INVALIDC
 const EXPIRED_PROMO_CODE_ERROR = "Sorry, the code 'HURRY' has now expired. Please try another code.";
 
 test.describe.serial('High Priority Tests - Adding Products to Bag',() => {
-  test('A runs first - Add Single Product to Bag', async ({ page, landingPage }) => {
+  test('A runs first - Add Single Product to Bag', async ({ page, landingPage, technologyIPadsTabletsPage }) => {
     //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.tech.hover(); // Navigate to a category tech
     await landingPage.tabletsiPads.click()
-    await landingPage.firstProductFromList.click()// Navigate to a product page
+    await technologyIPadsTabletsPage .firstProductFromList.click()// Navigate to a product page
     await page.waitForLoadState('domcontentloaded');
     //await landingPage.addToBag.waitFor()
     await landingPage.addToBag.click({ force: true }) // Add product to bag
