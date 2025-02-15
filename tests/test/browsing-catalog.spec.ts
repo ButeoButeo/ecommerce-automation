@@ -2,10 +2,10 @@ import { test, expect } from '../../fixtures/pom.fixture'
 
 test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => { 
 //Justification: Smooth catalog browsing is critical for user engagement and product discovery.
-  test('Category Navigation', async ({ page,landingPage, womensAccessoriesPage}) => {
+  test('Category Navigation', async ({ page,landingPage, womensAccessoriesPage, navigationMainMenuPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
-    await landingPage.womens.hover(); // Navigate to "Women" category 
-    await landingPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category 
+    await navigationMainMenuPage.womens.hover(); // Navigate to "Women" category 
+    await navigationMainMenuPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category 
     await expect(page).toHaveURL(/.*womens\/\accessories/); // Ensure the URL corresponds to the "Women/accessories" category
     await expect(womensAccessoriesPage.valentinoBag).toBeVisible(); // Verify product list is displayed
   });   
@@ -19,9 +19,9 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await expect(womensAccessoriesPage.dress).toContainText('Dress'); // Ensure search results is relevant
   }); 
 
-  test(' Pagination ', async ({ page,landingPage, womensAccessoriesPage}) => {
+  test(' Pagination ', async ({ page,landingPage, womensAccessoriesPage, navigationMainMenuPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
-    await landingPage.womens.click(); // Navigate to a category
+    await navigationMainMenuPage.womens.click(); // Navigate to a category
     await expect(page).toHaveURL(/.*womens/); // Ensure URL includes navigate to a category
     await landingPage.myBag.hover();
     await expect(womensAccessoriesPage.pagination.nth(1)).toHaveClass('js-facet-selection pagination__item_active'); // Verify pagination 1 is the current page
@@ -47,10 +47,10 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await expect(womensAccessoriesPage.previous).not.toBeVisible(); // Verify pagination is visible
  });
 
-  test('Filter Products', async ({ page,landingPage, technologyIPadsTabletsPage}) => {
+  test('Filter Products', async ({ page,landingPage, technologyIPadsTabletsPage, navigationMainMenuPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
-    await landingPage.tech.hover(); // Navigate to a category tech
-    await landingPage.tabletsiPads.click()
+    await navigationMainMenuPage.tech.hover(); // Navigate to a category tech
+    await navigationMainMenuPage.tabletsiPads.click()
     await expect(page).toHaveURL(/.*tech/); // Ensure URL includes navigate to a category tech
     await technologyIPadsTabletsPage.screenSize.click()
     await technologyIPadsTabletsPage.tabletTypeIpad.click()
@@ -60,10 +60,10 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await expect(page).toHaveURL(/.*Colour--Blue/); // Ensure URL includes navigate to a category tech
   });
 
-  test('Sorting Products ', async ({page,landingPage, womensAccessoriesPage}) => {
+  test('Sorting Products ', async ({page,landingPage, womensAccessoriesPage, navigationMainMenuPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
-    await landingPage.womens.hover(); // Navigate to "Women" category 
-    await landingPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category
+    await navigationMainMenuPage.womens.hover(); // Navigate to "Women" category 
+    await navigationMainMenuPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category
     await expect(page).toHaveURL(/.*womens\/\accessories/); // Ensure the URL corresponds to the "
     await womensAccessoriesPage.sortByLowestPrice.selectOption('Lowest Price'); // Sort by "Price: Low to High"
     await landingPage.myAccount.click();

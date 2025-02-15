@@ -7,6 +7,8 @@ import { FormStep3AddressPage} from '../pages/registration-new-costumer/FormStep
 import { FormStep4ApplyPage} from '../pages/registration-new-costumer/FormStep4Apply.page'
 import { TechnologyIPadsTabletsPage} from '../pages/products-pages/TechnologyIPadsTablets.page'
 import { WomensAccessoriesPage} from '../pages/products-pages/WomensAccessories.page'
+import { MyBagPage} from '../pages/MyBag.page'
+import { NavigationMainMenuPage} from '../pages/NavigationMainMenu.page'
 
 type Pages = {
   storageStateManager: string
@@ -18,6 +20,8 @@ type Pages = {
   formStep4ApplyPage: FormStep4ApplyPage
   technologyIPadsTabletsPage: TechnologyIPadsTabletsPage
   womensAccessoriesPage: WomensAccessoriesPage
+  myBagPage: MyBagPage
+  navigationMainMenuPage: NavigationMainMenuPage
 }
 
 const test = baseTest.extend<Pages/* , Options */>({
@@ -44,6 +48,12 @@ const test = baseTest.extend<Pages/* , Options */>({
   },
   womensAccessoriesPage: async ({ page }, use) => {
     await use(new WomensAccessoriesPage(page))
+  },
+  myBagPage: async ({ page }, use) => {
+    await use(new MyBagPage(page))
+  },
+  navigationMainMenuPage: async ({ page }, use) => {
+    await use(new NavigationMainMenuPage(page))
   },
 })
 export const describe = test.describe

@@ -8,7 +8,7 @@ const INVALID_PROMO_CODE_ERROR = "Sorry, we don’t recognise the code 'INVALIDC
 const EXPIRED_PROMO_CODE_ERROR = "Sorry, the code 'HURRY' has now expired. Please try another code.";
 
 test.describe.serial('High Priority Tests - Adding Products to Bag',() => {
-  test('A runs first - Add Single Product to Bag', async ({ page, landingPage, technologyIPadsTabletsPage }) => {
+  test('A runs first - Add Single Product to Bag', async ({ page, landingPage, technologyIPadsTabletsPage, myBagPage }) => {
     //const landingPage = new  LandingPage(page);
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.tech.hover(); // Navigate to a category tech
@@ -16,48 +16,48 @@ test.describe.serial('High Priority Tests - Adding Products to Bag',() => {
     await technologyIPadsTabletsPage .firstProductFromList.click()// Navigate to a product page
     await page.waitForLoadState('domcontentloaded');
     //await landingPage.addToBag.waitFor()
-    await landingPage.addToBag.click({ force: true }) // Add product to bag
-    await landingPage.successMsgAddBag.waitFor()
-    await expect(landingPage.successMsgAddBag).toBeVisible()
-    await landingPage.closeSuccessMsg.click()
-    await landingPage.myBag.click()
-    await landingPage.checkBagNumberOfItemsAdded(1) // Verify item count in bag 
+    await myBagPage.addToBag.click({ force: true }) // Add product to bag
+    await myBagPage.successMsgAddBag.waitFor()
+    await expect(myBagPage .successMsgAddBag).toBeVisible()
+    await myBagPage.closeSuccessMsg.click()
+    await myBagPage.myBag.click()
+    await myBagPage.checkBagNumberOfItemsAdded(1) // Verify item count in bag 
   });
 
-  test('B runs second - Invalid  Promo Code', async ({ page, landingPage }) => {
+  test('B runs second - Invalid  Promo Code', async ({ page, landingPage, myBagPage }) => {
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.myBag.click()
-    await landingPage.checkOut.click()
-    await landingPage.promoCode.waitFor()
+    await myBagPage.checkOut.click()
+    await myBagPage.promoCode.waitFor()
 
     // Test invalid promo code
-    await landingPage.addPromoCode(INVALID_PROMO_CODE); // Enter the valid promo code, Apply promo code
-    await landingPage.promoCodeerror.waitFor()
-    await expect(landingPage.promoCodeerror).toBeVisible()
-    const promoerror = await landingPage.promoCodeerror.textContent()
+    await myBagPage.addPromoCode(INVALID_PROMO_CODE); // Enter the valid promo code, Apply promo code
+    await myBagPage.promoCodeerror.waitFor()
+    await expect(myBagPage.promoCodeerror).toBeVisible()
+    const promoerror = await myBagPage.promoCodeerror.textContent()
     expect(promoerror).toBe(INVALID_PROMO_CODE_ERROR)// Validate invalid code error message
 
     // Test expired promo code
-    await landingPage.addPromoCode(EXPIRED_PROMO_CODE); // Enter the expired promo code, Apply promo code
-    await landingPage.promoCodeExpired.waitFor()
-    const promoerrorexpired = await landingPage.promoCodeExpired.textContent()
+    await myBagPage.addPromoCode(EXPIRED_PROMO_CODE); // Enter the expired promo code, Apply promo code
+    await myBagPage.promoCodeExpired.waitFor()
+    const promoerrorexpired = await myBagPage.promoCodeExpired.textContent()
     expect(promoerrorexpired).toBe("Sorry, the code 'HURRY' has now expired. Please try another code.")// Validate invalid code error message
-    await landingPage.addPromoCode(EXPIRED_PROMO_CODE_ERROR); // Enter the valid promo code, Apply promo code
+    await myBagPage.addPromoCode(EXPIRED_PROMO_CODE_ERROR); // Enter the valid promo code, Apply promo code
 
     // Test valid promo code
-    await landingPage.addPromoCode(VALID_PROMO_CODE); // Enter the valid promo code, Apply promo code
-    await expect(landingPage.promoCodeerror).not.toBeVisible()
-    await expect(landingPage.promoCodeValidAdded).toBeVisible()
+    await myBagPage.addPromoCode(VALID_PROMO_CODE); // Enter the valid promo code, Apply promo code
+    await expect(myBagPage.promoCodeerror).not.toBeVisible()
+    await expect(myBagPage.promoCodeValidAdded).toBeVisible()
   });
 
-  test('C runs third - Remove/delete items from bag', async ({ page, landingPage }) => {
+  test('C runs third - Remove/delete items from bag', async ({ page, landingPage, myBagPage  }) => {
     await landingPage.visitPageWithoutCookiesBanner();
     await landingPage.myBag.click()
-    await landingPage.removeItemFromBag.click()// Remove product
-    await landingPage.removePromoCodeFromBag.click(); //remoce promo code
+    await myBagPage.removeItemFromBag.click()// Remove product
+    await myBagPage.removePromoCodeFromBag.click(); //remoce promo code
     await page.waitForLoadState('domcontentloaded')
-    await landingPage.checkBagNumberOfItemsAdded(0)// Verify bag is empty
-    await landingPage.closeBag.click()
+    await myBagPage.checkBagNumberOfItemsAdded(0)// Verify bag is empty
+    await myBagPage.closeBag.click()
   });
   test('D Log out', async ({ page , landingPage  }) => {
     //const landingPage = new  LandingPage(page);
