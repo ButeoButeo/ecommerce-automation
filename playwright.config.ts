@@ -31,7 +31,7 @@ export default defineConfig({
   reporter: [['list'],['allure-playwright']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    headless: true, // Set to false to run in headed mode
+    headless: false, // Set to false to run in headed mode
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
     /* Base URL to use in actions like `await page.goto('/')`. */

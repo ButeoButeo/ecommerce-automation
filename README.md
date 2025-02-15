@@ -40,7 +40,7 @@ In proper staging environment this step should be asked to be disabled in order 
     "dotenv": "^16.4.5"
 
 # Test execution 
-1. npm test:headed 
+1. npm run test:headed 
 2. Request and validate validation code during running setup.
 
 

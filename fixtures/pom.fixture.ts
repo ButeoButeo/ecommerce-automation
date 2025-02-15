@@ -2,8 +2,8 @@ import { test as baseTest } from '@playwright/test'
 import { LandingPage} from '../pages/Landing.page'
 import { SignInRegisterPage} from '../pages/SignInRegister.page'
 import { FormStep1DetailsPage} from '../pages/registration-new-costumer/FormStep1Details.page'
-import { FormStep2DetailsPage} from '../pages/registration-new-costumer/FormStep2Account.page'
-import { FormStep3DetailsPage} from '../pages/registration-new-costumer/FormStep3Address.page'
+import { FormStep2AccountPage} from '../pages/registration-new-costumer/FormStep2Account.page'
+import { FormStep3AddressPage} from '../pages/registration-new-costumer/FormStep3Address.page'
 import { FormStep4ApplyPage} from '../pages/registration-new-costumer/FormStep4Apply.page'
 
 type Pages = {
@@ -11,8 +11,8 @@ type Pages = {
   landingPage: LandingPage
   signInRegisterPage: SignInRegisterPage
   formStep1DetailsPage: FormStep1DetailsPage
-  formStep2DetailsPage: FormStep2DetailsPage
-  formStep3DetailsPage: FormStep3DetailsPage
+  formStep2AccountPage: FormStep2AccountPage
+  formStep3AddressPage: FormStep3AddressPage
   formStep4ApplyPage: FormStep4ApplyPage
 }
 
@@ -26,11 +26,14 @@ const test = baseTest.extend<Pages/* , Options */>({
   formStep1DetailsPage: async ({ page }, use) => {
   await use(new FormStep1DetailsPage(page))
   },
-  formStep2DetailsPage: async ({ page }, use) => {
-    await use(new FormStep2DetailsPage(page))
+  formStep2AccountPage: async ({ page }, use) => {
+    await use(new FormStep2AccountPage(page))
   },
-  formStep3DetailsPage: async ({ page }, use) => {
-    await use(new FormStep3DetailsPage(page))
+  formStep3AddressPage: async ({ page }, use) => {
+    await use(new FormStep3AddressPage(page))
+  },
+  formStep4ApplyPage: async ({ page }, use) => {
+    await use(new FormStep4ApplyPage(page))
   },
 })
 export const describe = test.describe

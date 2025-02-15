@@ -1,6 +1,6 @@
 import { type Locator, type Page, expect } from '@playwright/test'
 
-export class FormStep2DetailsPage {
+export class FormStep2AccountPage {
   readonly page: Page
   // 2nd registration form
   readonly payLater : Locator

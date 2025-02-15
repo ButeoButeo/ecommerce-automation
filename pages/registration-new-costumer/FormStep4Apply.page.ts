@@ -16,6 +16,7 @@ export class FormStep4ApplyPage {
   readonly lastContinueButton: Locator
   readonly continueToMyAccount: Locator
   readonly signinButton: Locator
+  
   constructor(page: Page) {
     this.page = page
     // 4th registration form "Apply"

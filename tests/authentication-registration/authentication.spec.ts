@@ -36,34 +36,34 @@ test.describe(' Authentication-registration', async () => {
     await formStep1DetailsPage.validatePhoneNumberFormat()
   });  
 
-  test('TC Scenario 4: - successful submission of the first step registration form', async ({page, landingPage, formStep1DetailsPage, formStep2DetailsPage, formStep3DetailsPage}) => {
+  test('TC Scenario 4: - successful submission of the first step registration form', async ({page, landingPage, formStep1DetailsPage, formStep2AccountPage, formStep3AddressPage, formStep4ApplyPage}) => {
     // step 6 - successful submission of the first step registration form
     await formStep1DetailsPage.fillDetailsForm1(email, 'Mr', firstName, lastName,  '1', 'January', '1990', '07512345678','Aa123456789@2025');
     await formStep1DetailsPage.continueWithEmails.click();
     // step 7 - Submit the second step registration form "Account"
-    await formStep2DetailsPage.payLater.click();
-    await formStep2DetailsPage.continueButton.click();
+    await formStep2AccountPage.payLater.click();
+    await formStep2AccountPage.continueButton.click();
     // step 8 - Submit the third step registration form "Address"
-    await formStep3DetailsPage.houseNumberOrName.fill('Brunswick Park Rd');
-    await formStep3DetailsPage.postCode.fill('WS109HP');
+    await formStep3AddressPage.houseNumberOrName.fill('Brunswick Park Rd');
+    await formStep3AddressPage.postCode.fill('WS109HP');
     await page.keyboard.press('Enter');
     // step 9 - validate address found
-    await formStep3DetailsPage.adressFound.hover()
-    await expect(formStep3DetailsPage.adressFound).toBeVisible();
+    await formStep3AddressPage.adressFound.hover()
+    await expect(formStep3AddressPage.adressFound).toBeVisible();
     //step 10 - select number of years
-    await formStep3DetailsPage.selectYearsNumber('11');
-    await formStep3DetailsPage.continue3Button.click();
+    await formStep3AddressPage.selectYearsNumber('11');
+    await formStep3AddressPage.continue3Button.click();
     //step 11 - Submit the 4th step registration form "Apply"
-    await formStep3DetailsPage.continue4Button.click();
+    await formStep3AddressPage.continue3Button.click();
     //step 12 - validate successful registration
-    await formStep3DetailsPage.doNoApplyCredit.click();
-    await formStep2DetailsPage.continueButton.click();
-    await formStep3DetailsPage.agree.click(); 
-    await formStep3DetailsPage.acceptCreditAgrement.click();
-    await formStep3DetailsPage.successRegistrationMsg.hover() 
-    const successMesg = await formStep3DetailsPage.successRegistrationMsg.innerText();
-    await expect(formStep3DetailsPage.successRegistrationMsg).toContainText('Thanks for Registering Your');
-    await formStep3DetailsPage.lastContinueButton.click();
+    await formStep4ApplyPage.doNoApplyCredit.click();
+    await formStep4ApplyPage.lastContinueButton.click();
+    await formStep4ApplyPage.agree.click(); 
+    await formStep4ApplyPage.acceptCreditAgrement.click();
+    await formStep4ApplyPage.successRegistrationMsg.hover() 
+    const successMesg = await formStep4ApplyPage.successRegistrationMsg.innerText();
+    await expect(formStep4ApplyPage.successRegistrationMsg).toContainText('Thanks for Registering Your');
+    await formStep4ApplyPage.lastContinueButton.click();
     await expect(landingPage.myAccount).toBeVisible(); 
     await landingPage.myAccount.click();
   });
