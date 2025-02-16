@@ -1,5 +1,7 @@
 import { type Locator, type Page, expect } from '@playwright/test'
 
+import { SortByPage } from '../components/SortBy.comp'
+
 export class WomensAccessoriesPage {
     readonly page: Page
     //acessory sub-menu accessories items page
@@ -12,7 +14,7 @@ export class WomensAccessoriesPage {
     readonly pagination: Locator
     readonly previous: Locator
     //sorting products
-    readonly sortByLowestPrice : Locator
+    readonly sortByLowestPrice : SortByPage
   constructor(page: Page) {
     this.page = page
     //acessory sub-menu bag items page
@@ -25,6 +27,6 @@ export class WomensAccessoriesPage {
     this.pagination = page.locator('.js-product-pagination').locator('li')
     this.previous = page.getByRole('link', { name: 'Previous' }).nth(1)
     //sorting products
-    this.sortByLowestPrice = page.getByLabel('Sort By:')
+    this.sortByLowestPrice = new SortByPage(page)
   }
 }

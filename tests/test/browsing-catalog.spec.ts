@@ -1,6 +1,6 @@
 import { test, expect } from '../../fixtures/pom.fixture'
 
-test.describe(' Medium Priority Tests - Browsing the Catalog', () => { 
+test.describe.only(' Medium Priority Tests - Browsing the Catalog', () => { 
 //Justification: Smooth catalog browsing is critical for user engagement and product discovery.
   test('Category Navigation', async ({ page,landingPage, womensAccessoriesPage, navigationMainMenuPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
@@ -66,7 +66,7 @@ test.describe(' Medium Priority Tests - Browsing the Catalog', () => {
     await navigationMainMenuPage.womens.hover(); // Navigate to "Women" category 
     await navigationMainMenuPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category
     await expect(page).toHaveURL(/.*womens\/\accessories/); // Ensure the URL corresponds to the "
-    await womensAccessoriesPage.sortByLowestPrice.selectOption('Lowest Price'); // Sort by "Price: Low to High"
+    await womensAccessoriesPage.sortByLowestPrice.sortBy('Lowest Price'); // Sort by "Price: Low to High"
     await landingPage.myAccount.click();
     await landingPage.myBag.hover()
     await expect(page).toHaveURL(/.*sort=Lowest/); // Ensure the URL corresponds
