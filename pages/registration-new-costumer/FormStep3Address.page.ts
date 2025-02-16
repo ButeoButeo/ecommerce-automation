@@ -16,7 +16,7 @@ export class FormStep3AddressPage {
     this.houseNumberOrName = page.getByRole('textbox', { name: 'House number or name:' })
     this.postCode = page.getByRole('textbox', { name: 'Postcode:' })
     this.findAdressButton = page.getByRole('link', { name: 'Find address' })
-    this.adressFound = page.getByLabel('Address', { exact: true }).locator('div').filter({ hasText: 'oakeswell health centre' }).nth(3)
+    this.adressFound = page.locator('#confirm-address').first();
     this.years = page.getByLabel('Years:');
     this.continue3Button = page.getByRole('link', { name: 'Continue' });
   }

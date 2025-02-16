@@ -1,6 +1,6 @@
 import { test, expect } from '../../fixtures/pom.fixture'
 
-test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => { 
+test.describe(' Medium Priority Tests - Browsing the Catalog', () => { 
 //Justification: Smooth catalog browsing is critical for user engagement and product discovery.
   test('Category Navigation', async ({ page,landingPage, womensAccessoriesPage, navigationMainMenuPage}) => {
     await landingPage.visitPageWithoutCookiesBanner();
