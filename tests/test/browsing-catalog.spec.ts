@@ -7,7 +7,7 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await navigationMainMenuPage.womens.hover(); // Navigate to "Women" category 
     await navigationMainMenuPage.accessories.click({ force: true }); // Navigate to sub-menu "accessories" category 
     await expect(page).toHaveURL(/.*womens\/\accessories/); // Ensure the URL corresponds to the "Women/accessories" category
-    await expect(womensAccessoriesPage.valentinoBag).toBeVisible(); // Verify product list is displayed
+    await expect(womensAccessoriesPage.firstItemFromList).toBeVisible(); // Verify product list is displayed
   });   
 
   test(' Search Functionality', async ({ page,landingPage, womensAccessoriesPage}) => {
@@ -15,8 +15,8 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await landingPage.search.fill('dress'); // Fill search bar
     await landingPage.search.press('Enter'); // Submit search
     await expect(page).toHaveURL(/.*womens.*dress/); // Ensure URL includes the search term
-    await expect(womensAccessoriesPage.dress).toBeVisible(); // Verify dress item is displayed
-    await expect(womensAccessoriesPage.dress).toContainText('Dress'); // Ensure search results is relevant
+    await expect(womensAccessoriesPage.firstDressFromList).toBeVisible(); // Verify dress item is displayed
+    await expect(womensAccessoriesPage.firstDressFromList).toContainText('Dress'); // Ensure search results is relevant
   }); 
 
   test(' Pagination ', async ({ page,landingPage, womensAccessoriesPage, navigationMainMenuPage}) => {
@@ -29,6 +29,7 @@ test.describe.parallel(' Medium Priority Tests - Browsing the Catalog', () => {
     await womensAccessoriesPage.pagination.nth(2).click(); // Click next page button
     await expect(womensAccessoriesPage.pagination.nth(2)).toBeEnabled(); // Verify pagination 2 is enabled
     await page.waitForLoadState('domcontentloaded'); // Wait for page to load
+    await womensAccessoriesPage.pagination.nth(2).waitFor();
     await expect(womensAccessoriesPage.pagination.nth(2)).toHaveClass('js-facet-selection pagination__item_active'); 
     await womensAccessoriesPage.previous.waitFor()
     await expect(womensAccessoriesPage.previous).toBeVisible(); // Verify pagination previous is visible

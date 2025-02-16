@@ -8,6 +8,7 @@ export class NavigationMainMenuPage {
       //sub-navigation menu bar
       readonly accessories: Locator
       readonly tabletsiPads : Locator
+      
   constructor(page: Page) {
     this.page = page
     //Main navigation menu bar

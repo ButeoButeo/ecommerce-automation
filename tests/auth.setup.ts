@@ -10,4 +10,4 @@ setup('authenticate', async ({ page, landingPage, signInRegisterPage }) => {
     await expect(landingPage.myAccount).toBeVisible();
     await landingPage.myAccount.click();
     await expect(landingPage.logout).toBeVisible();
-});
+})
