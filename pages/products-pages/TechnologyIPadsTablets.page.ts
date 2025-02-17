@@ -20,7 +20,7 @@ export class TechnologyIPadsTabletsPage {
    this.onSale = page.getByRole('link', { name: 'refine via On Sale Yes' })
    this.colourBlue = page.getByRole('link', { name: 'refine via Colour Blue' })
    this.review = page.getByRole('link', { name: 'refine via Reviews 5 Star' })
-   this.firstProductFromList = page.locator('.product__title.js-product-title').first()
+   this.firstProductFromList = page.locator('.js-product-title-anchor').first()
   }
 
 }

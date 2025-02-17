@@ -1,6 +1,6 @@
 import { type Locator, type Page, expect } from '@playwright/test'
 
-import * as errormsg from '../../errormsg.config';
+import * as errormsg from '../../errormsg';
 
 export class FormStep1DetailsPage {
   readonly page: Page

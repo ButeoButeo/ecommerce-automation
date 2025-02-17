@@ -40,7 +40,6 @@ export default defineConfig({
     trace: 'retry-with-trace',
     launchOptions: {
       args: ['--disable-web-security', '--disable-http2'],
-      
     },
     extraHTTPHeaders: { 'Upgrade-Insecure-Requests': '1' }
   },

@@ -1,6 +1,6 @@
 import { test, expect } from '../../fixtures/pom.fixture'
-import * as promocodes from '../../promocodes.config';
-import * as errormsg from '../../errormsg.config';
+import * as promocodes from '../../promocodes';
+import * as errormsg from '../../errormsg';
 
 test.describe.serial('High Priority Tests - Adding Products to Bag',() => {
   test('A runs first - Add Single Product to Bag', async ({ page, landingPage, technologyIPadsTabletsPage, myBagPage, navigationMainMenuPage }) => {
@@ -8,7 +8,7 @@ test.describe.serial('High Priority Tests - Adding Products to Bag',() => {
     await landingPage.visitPageWithoutCookiesBanner();
     await navigationMainMenuPage.tech.hover(); // Navigate to a category tech
     await navigationMainMenuPage.tabletsiPads.click()
-    await technologyIPadsTabletsPage .firstProductFromList.click()// Navigate to a product page
+    await technologyIPadsTabletsPage.firstProductFromList.click()// Navigate to a product page
     await page.waitForLoadState('domcontentloaded');
     //await landingPage.addToBag.waitFor()
     await myBagPage.addToBag.click({ force: true }) // Add product to bag

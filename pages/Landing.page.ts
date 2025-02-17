@@ -30,13 +30,15 @@ export class LandingPage {
   }
 
   async visitPage() {
-    await this.page.goto('/');
+    await this.page.goto(`/`);
+    await this.page.getByRole('button', { name: 'Accept All Cookies' }).isVisible();
     await this.page.getByRole('button', { name: 'Accept All Cookies' }).click();
     await expect(this.page).toHaveURL('https://www.fashionworld.co.uk')
   }
 
   async visitPageWithoutCookiesBanner() {
-    await this.page.goto('/');
+    await this.page.goto(`/`);
+    await this.myAccount.hover();
     await expect(this.page).toHaveURL('https://www.fashionworld.co.uk')
   }
 

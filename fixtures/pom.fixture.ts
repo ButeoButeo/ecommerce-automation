@@ -1,4 +1,4 @@
-import { test as baseTest } from '@playwright/test'
+import { test as baseTest, Page} from '@playwright/test'
 import { LandingPage} from '../pages/Landing.page'
 import { SignInRegisterPage} from '../pages/SignInRegister.page'
 import { FormStep1DetailsPage} from '../pages/registration-new-costumer/FormStep1Details.page'
@@ -11,6 +11,7 @@ import { MyBagPage} from '../pages/MyBag.page'
 import { NavigationMainMenuPage} from '../pages/NavigationMainMenu.page'
 
 type Pages = {
+  page: Page
   storageStateManager: string
   landingPage: LandingPage
   signInRegisterPage: SignInRegisterPage
@@ -24,9 +25,9 @@ type Pages = {
   navigationMainMenuPage: NavigationMainMenuPage
 }
 
-const test = baseTest.extend<Pages/* , Options */>({
-    landingPage: async ({ page }, use) => {
-    await use(new LandingPage(page))
+const test = baseTest.extend<Pages>({
+  landingPage: async ({ page }, use) => {
+  await use(new LandingPage(page))
   },
   signInRegisterPage: async ({ page }, use) => {
   await use(new SignInRegisterPage(page))
@@ -56,6 +57,7 @@ const test = baseTest.extend<Pages/* , Options */>({
     await use(new NavigationMainMenuPage(page))
   },
 })
+
 export const describe = test.describe
 export const expect = test.expect
 export { test }

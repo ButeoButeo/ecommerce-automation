@@ -1,4 +1,4 @@
-import { type Locator, type Page, expect } from '@playwright/test'
+import { type Locator, type Page } from '@playwright/test'
 import path from 'path';
 
 const authFile = path.join(__dirname, '../playwright/.auth/user.json');
